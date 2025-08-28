@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafael de Sousa Moura - Desenvolvedor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/heroicons/2.0.18/24/outline/index.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            color: #000;
+            background: #fff;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+
+        .language-btn {
+            width: 32px;
+            height: 24px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .language-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .language-btn.active {
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom: 2px solid #000;
+        }
+
+        .name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.5px;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .contact-item {
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .contact-item.link {
+            cursor: pointer;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: #f8f8f8;
+            padding: 1.5rem;
+            border-right: 1px solid #ddd;
+        }
+
+        .main-content {
+            padding: 1.5rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-icon {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .skill-category {
+            margin-bottom: 1.2rem;
+        }
+
+        .skill-category h4 {
+            color: #000;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        .skill-list {
+            font-size: 0.85rem;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .experience-item, .education-item, .certification-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .experience-item:last-child, .education-item:last-child, .certification-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .experience-item, .education-item, .certification-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .experience-item:last-child, .education-item:last-child, .certification-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .certification-item {
+            margin-bottom: 0.5rem;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .certification-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .certification-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #000;
+            text-decoration: underline;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .certification-title:hover {
+            color: #000;
+        }
+
+        .certification-provider {
+            color: #666;
+            font-size: 0.8rem;
+            margin: 0;
+            font-style: italic;
+        }
+
+        .certification-separator {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .certification-provider {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .job-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 0.2rem;
+        }
+
+        .company {
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+        }
+
+        .duration {
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .achievements {
+            list-style: none;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .achievements li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .achievements li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0;
+            font-size: 0.9rem;
+        }
+
+        .language-name {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .language-icon {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .language-level {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 0;
+                border: none;
+            }
+
+            .header {
+                padding: 1.5rem 1rem;
+            }
+
+            .name {
+                font-size: 1.8rem;
+            }
+
+            .contact-info {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                background: #fff;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .sidebar, .main-content {
+                padding: 1rem;
+            }
+        }
+
+        @media print {
+            .print-btn {
+                display: none;
+            }
+            
+            .container {
+                border: none;
+                box-shadow: none;
+            }
+
+            .sidebar {
+                background: #fff;
+            }
+
+            body {
+                font-size: 12px;
+            }
+
+            .section {
+                margin-bottom: 1.5rem;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="name">Rafael de Sousa Moura</h1>
+            <p class="title">Desenvolvedor</p>
+            <div class="contact-info">
+                <span class="contact-item">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25s-7.5-4.108-7.5-11.25a7.5 7.5 0 1115 0z" />
+                    </svg>
+                    Limeira - São Paulo
+                </span>
+                <span class="contact-item">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                    </svg>
+                    (19) 99768-3171
+                </span>
+                <a href="https://github.com/rafaelmoura23" target="_blank" class="contact-item link">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/rafael-m-8971691b8/" target="_blank" class="contact-item link">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+        </header>
+
+        <div class="content">
+            <aside class="sidebar">
+                <section class="section">
+                    <h3 class="section-title">
+                        <svg class="section-icon" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.847a4.5 4.5 0 003.09 3.09L15.75 12l-2.847.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                        </svg>
+                        Competências
+                    </h3>
+                    
+                    <div class="skill-category">
+                        <h4>Inteligência Artificial</h4>
+                        <div class="skill-list">
+                            LLMs (OpenAI, Claude, Gemma), CrewAI, LangChain, Tool Calling, RAG Systems, Embeddings
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Desenvolvimento</h4>
+                        <div class="skill-list">
+                            Python, Node.js, React, HTML/CSS, JavaScript, PHP
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Dados & Analytics</h4>
+                        <div class="skill-list">
+                            Pandas, Streamlit, Chart.js, Data Scraping, KPI Dashboards
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Bancos de Dados</h4>
+                        <div class="skill-list">
+                            PostgreSQL, Supabase, Pinecone, Vector DB
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Automação</h4>
+                        <div class="skill-list">
+                            n8n, API Integration, Webhooks, Process Automation
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3 class="section-title">
+                        <svg class="section-icon" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" />
+                        </svg>
+                        Idiomas
+                    </h3>
+                    <div class="language-item">
+                        <span class="language-name">
+                            <svg class="language-icon" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                            </svg>
+                            Português
+                        </span>
+                        <span class="language-level">Nativo</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">
+                            <svg class="language-icon" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                            </svg>
+                            Inglês
+                        </span>
+                        <span class="language-level">Básico</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">
+                            <svg class="language-icon" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                            </svg>
+                            Espanhol
+                        </span>
+                        <span class="language-level">Intermediário</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="language-name">
+                            <svg class="language-icon" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                            </svg>
+                            Francês
+                        </span>
+                        <span class="language-level">Básico</span>
+                    </div>
+                </section>
+            </aside>
+
+            <main class="main-content">
+                <section class="section">
+                    <h3 class="section-title">
+                        <svg class="section-icon" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                        </svg>
+                        Experiência
+                    </h3>
+                    
+                    <div class="experience-item">
+                        <h4 class="job-title">Desenvolvedor de Soluções em IA e Dados</h4>
+                        <p class="company">Hiwis · Tempo Integral</p>
+                        <p class="duration" id="current-job-duration">Agosto 2025 - Presente · <span id="dynamic-duration">1 mês</span></p>
+                        <ul class="achievements">
+                            <li>Desenvolvimento de agentes inteligentes com LLMs (OpenAI, Groq, Claude, Gemma, Llama, LangChain, CrewAI), incluindo tool calling para automações</li>
+                            <li>Implementação de sistemas RAG utilizando Supabase, Pinecone, FAISS e embeddings com OpenAI</li>
+                            <li>Criação de fluxos automatizados utilizando n8n e Python, integrando APIs e serviços de IA</li>
+                            <li>Desenvolvimento de aplicações web full stack com React, Node.js, Express, PHP e PostgreSQL</li>
+                            <li>Criação de dashboards e visualizações interativas com JavaScript e Streamlit</li>
+                            <li>Gerenciamento de fluxos OAuth e integrações com APIs (Facebook, Instagram, Google, ElevenLabs)</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <h4 class="job-title">Analista de Dados</h4>
+                        <p class="company">Hiwis · Estágio</p>
+                        <p class="duration">Abril 2024 - Agosto 2025 · 1 ano 5 meses</p>
+                        <p class="duration">São Paulo, Brasil</p>
+                        <ul class="achievements">
+                            <li>Criação de dashboards para análise de dados em PowerBI, proporcionando insights visuais para tomada de decisões</li>
+                            <li>Tratamento e análise de dados utilizando Python e Excel, incluindo limpeza, transformação e visualização</li>
+                            <li>Automação de tarefas repetitivas para otimização de processos e aumentar eficiência operacional</li>
+                            <li>Desenvolvimento de relatórios analíticos e KPIs para acompanhamento de métricas empresariais</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <h4 class="job-title">Analista de Desenvolvimento de Sistemas</h4>
+                        <p class="company">Ajinomoto do Brasil · Aprendiz</p>
+                        <p class="duration">Fevereiro 2023 - Abril 2024 · 1 ano 3 meses</p>
+                        <ul class="achievements">
+                            <li>Criação de dashboards interativos para análise de KPIs empresariais</li>
+                            <li>Desenvolvimento de análises preditivas e relatórios estratégicos</li>
+                            <li>Automação de processos e tratamento de dados</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3 class="section-title">
+                        <svg class="section-icon" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                        </svg>
+                        Formação
+                    </h3>
+                    
+                    <div class="education-item">
+                        <h4 class="job-title">Ciência de Dados - Bacharelado</h4>
+                        <p class="company">Universidade Virtual do Estado de São Paulo (UNIVESP)</p>
+                        <p class="duration">Setembro 2024 - Setembro 2028</p>
+                    </div>
+
+                    <div class="education-item">
+                        <h4 class="job-title">Desenvolvimento de Sistemas - Técnico</h4>
+                        <p class="company">SENAI - Luiz Varga</p>
+                        <p class="duration">Janeiro 2023 - Dezembro 2024</p>
+                        <ul class="achievements">
+                            <li>Estudei diversas linguagens de programação, frameworks e tecnologias, proporcionando uma visão ampla do desenvolvimento de software</li>
+                            <li>HTML e CSS para estruturação e estilização de interfaces web</li>
+                            <li>Programação orientada a objetos utilizando Java</li>
+                            <li>Desenvolvimento Backend: PHP (Laravel), JavaScript e Node.js</li>
+                            <li>Desenvolvimento Frontend: Angular e React</li>
+                            <li>Desenvolvimento Mobile: Flutter</li>
+                            <li>Experiência com conceitos e ferramentas de IA, utilizando Java e Python para Machine Learning, incluindo frameworks como Scikit-learn, Keras, Streamlit e TensorFlow</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h3 class="section-title">
+                        <svg class="section-icon" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Certificações
+                    </h3>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://cas-bridge.xethub.hf.co/xet-bridge-us/67a47037749ea2c4b9fafd4b/6dba987e463209b2fb046c4106f44f7c8e64cff902193851bbd3420f107d0ac3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cas%2F20250828%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250828T011106Z&X-Amz-Expires=3600&X-Amz-Signature=bc58a8084460bfa2ba0a5df0634db42838dd2a17558d090fd6fc2d2014349926&X-Amz-SignedHeaders=host&X-Xet-Cas-Uid=66fd4e7f7a83f74b96c7491f&response-content-disposition=inline%3B+filename*%3DUTF-8%27%272025-03-29.png%3B+filename%3D%222025-03-29.png%22%3B&response-content-type=image%2Fpng&x-id=GetObject&Expires=1756347066&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc1NjM0NzA2Nn19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2FzLWJyaWRnZS54ZXRodWIuaGYuY28veGV0LWJyaWRnZS11cy82N2E0NzAzNzc0OWVhMmM0YjlmYWZkNGIvNmRiYTk4N2U0NjMyMDliMmZiMDQ2YzQxMDZmNDRmN2M4ZTY0Y2ZmOTAyMTkzODUxYmJkMzQyMGYxMDdkMGFjMyoifV19&Signature=FO9pPHFmURVVRtIlW0p4MrlvdNlATAmf7rz%7E6nxCy5YPdMjj8AlvYwCj7azyuAtmbcOw085FZ8oPGVKjjrgK-aeMddUtfWzi1psVzMyN5fsdt7zcgqZEfl4ta4fwkQgvoKA7-4cWlQuQwwfHOeFA8R6Cw5tClsBD82dJrL2b-jqE2IlAWAwOwFU14NRkEIJQosRfSiI3vv6mFY4jvCL69zAUvI2PXe5m-KxiqhbRF5bSeW9ijbMVvxYvahPGd-zsplEmVOLKUm6pxbw-CQq6oJrnhasysmwqnvmXK77lHBaieoLKjxbROnYY7vGn3zCAXnZ1z5XQw1aCN0DheGZThA__&Key-Pair-Id=K2L8F4GPSG1IFC" target="_blank" class="certification-title">AI Agents Fundamentals</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">HuggingFace</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://github.com/rafaelmoura23/Certificados/blob/main/Rafael%20de%20Sousa%20Moura_badge.pdf" target="_blank" class="certification-title">CrewAI - Building Multi-Agent Systems</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">CrewAI</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://github.com/rafaelmoura23/Certificados/blob/main/RAFAEL%20DE%20SOUSA%20MOURA_Artificial_Intelligence_with_Machine_Learning_in_Java_%E2%80%93_English_Award_Of_Completion_25_9_2024.pdf" target="_blank" class="certification-title">Artificial Intelligence with Machine Learning in Java</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">Oracle</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://github.com/rafaelmoura23/Certificados/blob/main/OCI%20-%20Generative%20AI%20Certified%20Professional.pdf" target="_blank" class="certification-title">OCI Generative AI Certified Professional</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">Oracle</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://www.dio.me/certificate/QEFEZRU0/share" target="_blank" class="certification-title">Python Data Analytics</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">DIO</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://www.cloudskillsboost.google/public_profiles/bb5ed8d5-aa6e-4d9a-b9da-5c9eb934ce86/badges/4171687" target="_blank" class="certification-title">Introduction to Generative AI</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">Google Cloud Skills Boost</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://www.coursera.org/account/accomplishments/specialization/certificate/U6MYWV8AF69G" target="_blank" class="certification-title">Google Data Analytics</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">Google</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://courses.cognitiveclass.ai/certificates/4cf4c32af84a406db727253511b62b9f" target="_blank" class="certification-title">Python for Data Science</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">Cognitive Class</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://github.com/rafaelmoura23/Certificados/blob/main/Introdu%C3%A7%C3%A3o_aos_modelos_de_regress%C3%A3o_linear_e_n%C3%A3o_linear_com_o_R-Certificado_212323.pdf" target="_blank" class="certification-title">Introduction to Linear and Nonlinear Regression Models</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">UFSCar</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://www.linkedin.com/in/rafael-m-8971691b8/details/certifications/" target="_blank" class="certification-title">Deployment of Cloud Artificial Intelligence Services - Microsoft AI-900</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">Microsoft</span>
+                        </div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-content">
+                            <a href="https://www.cloudskillsboost.google/public_profiles/bb5ed8d5-aa6e-4d9a-b9da-5c9eb934ce86" target="_blank" class="certification-title">Google Cloud | IA & Machine Learning</a>
+                            <span class="certification-separator">-</span>
+                            <span class="certification-provider">Google</span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function calculateJobDuration() {
+            // Data de início do trabalho atual (Agosto 2025)
+            const startDate = new Date('2025-08-01');
+            const currentDate = new Date();
+
+            // Calcular a diferença em meses
+            const yearDiff = currentDate.getFullYear() - startDate.getFullYear();
+            const monthDiff = currentDate.getMonth() - startDate.getMonth();
+            const totalMonths = yearDiff * 12 + monthDiff;
+
+            // Ajustar se ainda não completou o mês atual
+            const dayDiff = currentDate.getDate() - startDate.getDate();
+            const adjustedMonths = dayDiff >= 0 ? totalMonths : totalMonths - 1;
+
+            // Formatar a duração
+            let durationText = '';
+            if (adjustedMonths < 1) {
+                durationText = '1 mês';
+            } else if (adjustedMonths === 1) {
+                durationText = '1 mês';
+            } else if (adjustedMonths < 12) {
+                durationText = `${adjustedMonths} meses`;
+            } else {
+                const years = Math.floor(adjustedMonths / 12);
+                const remainingMonths = adjustedMonths % 12;
+
+                if (remainingMonths === 0) {
+                    durationText = years === 1 ? '1 ano' : `${years} anos`;
+                } else {
+                    const yearText = years === 1 ? '1 ano' : `${years} anos`;
+                    const monthText = remainingMonths === 1 ? '1 mês' : `${remainingMonths} meses`;
+                    durationText = `${yearText} ${monthText}`;
+                }
+            }
+
+            // Atualizar o elemento na página
+            const durationElement = document.getElementById('dynamic-duration');
+            if (durationElement) {
+                durationElement.textContent = durationText;
+            }
+        }
+
+        // Calcular a duração quando a página carregar
+        document.addEventListener('DOMContentLoaded', calculateJobDuration);
+
+        // Atualizar a duração a cada dia (opcional)
+        setInterval(calculateJobDuration, 24 * 60 * 60 * 1000); // 24 horas
+    </script>
+
+    <button class="print-btn" onclick="window.print()">IMPRIMIR</button>
+</body>
+</html>
