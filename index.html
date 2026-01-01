@@ -28,38 +28,191 @@
             position: relative;
         }
 
-        .language-selector {
+        /* Language Selector Button */
+        .lang-trigger {
             position: absolute;
             top: 1rem;
             right: 1rem;
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.85rem;
             display: flex;
+            align-items: center;
             gap: 0.5rem;
+            transition: all 0.2s ease;
             z-index: 100;
         }
 
-        .language-btn {
-            width: 32px;
-            height: 24px;
-            border: 1px solid #ddd;
-            border-radius: 3px;
+        .lang-trigger:hover {
+            border-color: #000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .lang-trigger .flag {
+            font-size: 1.2rem;
+        }
+
+        .lang-trigger .arrow {
+            font-size: 0.7rem;
+            transition: transform 0.2s ease;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Modal Box */
+        .language-modal {
+            background: #fff;
+            border: 2px solid #000;
+            padding: 2rem;
+            max-width: 520px;
+            width: 95%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .language-modal {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            border-bottom: 2px solid #000;
+            padding-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .flags-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .flag-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.7rem 0.8rem;
+            border: 2px solid #ddd;
+            background: #fff;
             cursor: pointer;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            min-width: 85px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .language-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        .flag-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            opacity: 0.7;
+            transition: all 0.2s ease;
         }
 
-        .language-btn.active {
-            border-color: #0066cc;
-            box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+        /* Brasil: Verde, Amarelo, Azul */
+        .flag-btn[data-lang="pt"]::after {
+            background: linear-gradient(to right, #009739 33%, #FFDF00 33%, #FFDF00 66%, #002776 66%);
+        }
+
+        /* EUA: Azul, Branco, Vermelho */
+        .flag-btn[data-lang="en"]::after {
+            background: linear-gradient(to right, #3c3b6e 33%, #ffffff 33%, #ffffff 66%, #b22234 66%);
+        }
+
+        /* Espanha: Vermelho, Amarelo, Vermelho */
+        .flag-btn[data-lang="es"]::after {
+            background: linear-gradient(to right, #c60b1e 25%, #ffc400 25%, #ffc400 75%, #c60b1e 75%);
+        }
+
+        /* França: Azul, Branco, Vermelho */
+        .flag-btn[data-lang="fr"]::after {
+            background: linear-gradient(to right, #002395 33%, #ffffff 33%, #ffffff 66%, #ed2939 66%);
+        }
+
+        .flag-btn:hover {
+            border-color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .flag-btn:hover::after {
+            height: 5px;
+            opacity: 1;
+        }
+
+        .flag-btn.active {
+            border-color: #000;
+            background: #fafafa;
+        }
+
+        .flag-btn.active::after {
+            height: 5px;
+            opacity: 1;
+        }
+
+        .flag-btn .flag {
+            font-size: 2rem;
+        }
+
+        .flag-btn .lang-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-close {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: #333;
         }
 
         .header {
@@ -352,8 +505,8 @@
         }
 
         @media print {
-            .print-btn {
-                display: none;
+            .print-btn, .lang-trigger, .modal-overlay {
+                display: none !important;
             }
             
             .container {
@@ -380,17 +533,51 @@
     </style>
 </head>
 <body>
+    <!-- Language Modal -->
+    <div class="modal-overlay" id="langModal">
+        <div class="language-modal">
+            <h3 class="modal-title" data-i18n="modal.title">Selecionar Idioma</h3>
+            <p class="modal-subtitle" data-i18n="modal.subtitle">Escolha o idioma de exibição</p>
+            <div class="flags-container">
+                <button class="flag-btn active" data-lang="pt" onclick="setLanguage('pt')">
+                    <span class="flag">🇧🇷</span>
+                    <span class="lang-name">Português</span>
+                </button>
+                <button class="flag-btn" data-lang="en" onclick="setLanguage('en')">
+                    <span class="flag">🇺🇸</span>
+                    <span class="lang-name">English</span>
+                </button>
+                <button class="flag-btn" data-lang="es" onclick="setLanguage('es')">
+                    <span class="flag">🇪🇸</span>
+                    <span class="lang-name">Español</span>
+                </button>
+                <button class="flag-btn" data-lang="fr" onclick="setLanguage('fr')">
+                    <span class="flag">🇫🇷</span>
+                    <span class="lang-name">Français</span>
+                </button>
+            </div>
+            <button class="modal-close" onclick="closeModal()" data-i18n="modal.close">Fechar</button>
+        </div>
+    </div>
+
     <div class="container">
+        <!-- Language Trigger Button -->
+        <button class="lang-trigger" onclick="openModal()">
+            <span class="flag" id="currentFlag">🇧🇷</span>
+            <span id="currentLangName">PT</span>
+            <span class="arrow">▼</span>
+        </button>
+
         <header class="header">
             <h1 class="name">Rafael de Sousa Moura</h1>
-            <p class="title">Desenvolvedor</p>
+            <p class="title" data-i18n="header.title">Desenvolvedor</p>
             <div class="contact-info">
                 <span class="contact-item">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25s-7.5-4.108-7.5-11.25a7.5 7.5 0 1115 0z" />
                     </svg>
-                    Limeira - São Paulo
+                    <span data-i18n="header.location">Limeira - São Paulo</span>
                 </span>
                 <span class="contact-item">
                     <svg class="icon" viewBox="0 0 24 24">
@@ -410,6 +597,7 @@
                     </svg>
                     LinkedIn
                 </a>
+                
             </div>
         </header>
 
@@ -420,39 +608,39 @@
                         <svg class="section-icon" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.847a4.5 4.5 0 003.09 3.09L15.75 12l-2.847.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                         </svg>
-                        Competências
+                        <span data-i18n="sections.skills">Competências</span>
                     </h3>
                     
                     <div class="skill-category">
-                        <h4>Inteligência Artificial</h4>
+                        <h4 data-i18n="skills.ai">Inteligência Artificial</h4>
                         <div class="skill-list">
                             LLMs (OpenAI, Claude, Gemma), CrewAI, LangChain, Tool Calling, RAG Systems, Embeddings
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h4>Desenvolvimento</h4>
+                        <h4 data-i18n="skills.development">Desenvolvimento</h4>
                         <div class="skill-list">
                             Python, Node.js, React, HTML/CSS, JavaScript, PHP
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h4>Dados & Analytics</h4>
+                        <h4 data-i18n="skills.data">Dados & Analytics</h4>
                         <div class="skill-list">
                             Pandas, Streamlit, Chart.js, Data Scraping, KPI Dashboards
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h4>Bancos de Dados</h4>
+                        <h4 data-i18n="skills.databases">Bancos de Dados</h4>
                         <div class="skill-list">
                             PostgreSQL, Supabase, Pinecone, Vector DB
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h4>Automação</h4>
+                        <h4 data-i18n="skills.automation">Automação</h4>
                         <div class="skill-list">
                             n8n, API Integration, Webhooks, Process Automation
                         </div>
@@ -464,43 +652,43 @@
                         <svg class="section-icon" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" />
                         </svg>
-                        Idiomas
+                        <span data-i18n="sections.languages">Idiomas</span>
                     </h3>
                     <div class="language-item">
                         <span class="language-name">
                             <svg class="language-icon" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
                             </svg>
-                            Português
+                            <span data-i18n="languages.portuguese">Português</span>
                         </span>
-                        <span class="language-level">Nativo</span>
+                        <span class="language-level" data-i18n="levels.native">Nativo</span>
                     </div>
                     <div class="language-item">
                         <span class="language-name">
                             <svg class="language-icon" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
                             </svg>
-                            Inglês
+                            <span data-i18n="languages.english">Inglês</span>
                         </span>
-                        <span class="language-level">Básico</span>
+                        <span class="language-level" data-i18n="levels.basic">Básico</span>
                     </div>
                     <div class="language-item">
                         <span class="language-name">
                             <svg class="language-icon" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
                             </svg>
-                            Espanhol
+                            <span data-i18n="languages.spanish">Espanhol</span>
                         </span>
-                        <span class="language-level">Intermediário</span>
+                        <span class="language-level" data-i18n="levels.intermediate">Intermediário</span>
                     </div>
                     <div class="language-item">
                         <span class="language-name">
                             <svg class="language-icon" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
                             </svg>
-                            Francês
+                            <span data-i18n="languages.french">Francês</span>
                         </span>
-                        <span class="language-level">Básico</span>
+                        <span class="language-level" data-i18n="levels.basic">Básico</span>
                     </div>
                 </section>
             </aside>
@@ -511,44 +699,44 @@
                         <svg class="section-icon" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
                         </svg>
-                        Experiência
+                        <span data-i18n="sections.experience">Experiência</span>
                     </h3>
                     
                     <div class="experience-item">
-                        <h4 class="job-title">Desenvolvedor de Soluções em IA e Dados</h4>
-                        <p class="company">Hiwis · Tempo Integral</p>
-                        <p class="duration" id="current-job-duration">Agosto 2025 - Presente · <span id="dynamic-duration">1 mês</span></p>
+                        <h4 class="job-title" data-i18n="exp1.title">Desenvolvedor de Soluções em IA e Dados</h4>
+                        <p class="company"><span data-i18n="exp1.company">Hiwis</span> · <span data-i18n="exp1.type">Tempo Integral</span></p>
+                        <p class="duration" id="current-job-duration"><span data-i18n="exp1.period">Agosto 2025 - Presente</span> · <span id="dynamic-duration">1 mês</span></p>
                         <ul class="achievements">
-                            <li>Desenvolvimento de agentes inteligentes com LLMs (OpenAI, Groq, Claude, Gemma, Llama, LangChain, CrewAI), incluindo tool calling para automações</li>
-                            <li>Implementação de sistemas RAG utilizando Supabase, Pinecone, FAISS e embeddings com OpenAI</li>
-                            <li>Criação de fluxos automatizados utilizando n8n e Python, integrando APIs e serviços de IA</li>
-                            <li>Desenvolvimento de aplicações web full stack com React, Node.js, Express, PHP e PostgreSQL</li>
-                            <li>Criação de dashboards e visualizações interativas com JavaScript e Streamlit</li>
-                            <li>Gerenciamento de fluxos OAuth e integrações com APIs (Facebook, Instagram, Google, ElevenLabs)</li>
+                            <li data-i18n="exp1.item1">Desenvolvimento de agentes inteligentes com LLMs (OpenAI, Groq, Claude, Gemma, Llama, LangChain, CrewAI), incluindo tool calling para automações</li>
+                            <li data-i18n="exp1.item2">Implementação de sistemas RAG utilizando Supabase, Pinecone, FAISS e embeddings com OpenAI</li>
+                            <li data-i18n="exp1.item3">Criação de fluxos automatizados utilizando n8n e Python, integrando APIs e serviços de IA</li>
+                            <li data-i18n="exp1.item4">Desenvolvimento de aplicações web full stack com React, Node.js, Express, PHP e PostgreSQL</li>
+                            <li data-i18n="exp1.item5">Criação de dashboards e visualizações interativas com JavaScript e Streamlit</li>
+                            <li data-i18n="exp1.item6">Gerenciamento de fluxos OAuth e integrações com APIs (Facebook, Instagram, Google, ElevenLabs)</li>
                         </ul>
                     </div>
 
                     <div class="experience-item">
-                        <h4 class="job-title">Analista de Dados</h4>
-                        <p class="company">Hiwis · Estágio</p>
-                        <p class="duration">Abril 2024 - Agosto 2025 · 1 ano 5 meses</p>
-                        <p class="duration">São Paulo, Brasil</p>
+                        <h4 class="job-title" data-i18n="exp2.title">Analista de Dados</h4>
+                        <p class="company"><span data-i18n="exp2.company">Hiwis</span> · <span data-i18n="exp2.type">Estágio</span></p>
+                        <p class="duration" data-i18n="exp2.period">Abril 2024 - Agosto 2025 · 1 ano 5 meses</p>
+                        <p class="duration" data-i18n="exp2.location">São Paulo, Brasil</p>
                         <ul class="achievements">
-                            <li>Criação de dashboards para análise de dados em PowerBI, proporcionando insights visuais para tomada de decisões</li>
-                            <li>Tratamento e análise de dados utilizando Python e Excel, incluindo limpeza, transformação e visualização</li>
-                            <li>Automação de tarefas repetitivas para otimização de processos e aumentar eficiência operacional</li>
-                            <li>Desenvolvimento de relatórios analíticos e KPIs para acompanhamento de métricas empresariais</li>
+                            <li data-i18n="exp2.item1">Criação de dashboards para análise de dados em PowerBI, proporcionando insights visuais para tomada de decisões</li>
+                            <li data-i18n="exp2.item2">Tratamento e análise de dados utilizando Python e Excel, incluindo limpeza, transformação e visualização</li>
+                            <li data-i18n="exp2.item3">Automação de tarefas repetitivas para otimização de processos e aumentar eficiência operacional</li>
+                            <li data-i18n="exp2.item4">Desenvolvimento de relatórios analíticos e KPIs para acompanhamento de métricas empresariais</li>
                         </ul>
                     </div>
 
                     <div class="experience-item">
-                        <h4 class="job-title">Analista de Desenvolvimento de Sistemas</h4>
-                        <p class="company">Ajinomoto do Brasil · Aprendiz</p>
-                        <p class="duration">Fevereiro 2023 - Abril 2024 · 1 ano 3 meses</p>
+                        <h4 class="job-title" data-i18n="exp3.title">Analista de Desenvolvimento de Sistemas</h4>
+                        <p class="company"><span data-i18n="exp3.company">Ajinomoto do Brasil</span> · <span data-i18n="exp3.type">Aprendiz</span></p>
+                        <p class="duration" data-i18n="exp3.period">Fevereiro 2023 - Abril 2024 · 1 ano 3 meses</p>
                         <ul class="achievements">
-                            <li>Criação de dashboards interativos para análise de KPIs empresariais</li>
-                            <li>Desenvolvimento de análises preditivas e relatórios estratégicos</li>
-                            <li>Automação de processos e tratamento de dados</li>
+                            <li data-i18n="exp3.item1">Criação de dashboards interativos para análise de KPIs empresariais</li>
+                            <li data-i18n="exp3.item2">Desenvolvimento de análises preditivas e relatórios estratégicos</li>
+                            <li data-i18n="exp3.item3">Automação de processos e tratamento de dados</li>
                         </ul>
                     </div>
                 </section>
@@ -558,27 +746,27 @@
                         <svg class="section-icon" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
                         </svg>
-                        Formação
+                        <span data-i18n="sections.education">Formação</span>
                     </h3>
                     
                     <div class="education-item">
-                        <h4 class="job-title">Ciência de Dados - Bacharelado</h4>
-                        <p class="company">Universidade Virtual do Estado de São Paulo (UNIVESP)</p>
-                        <p class="duration">Setembro 2024 - Setembro 2028</p>
+                        <h4 class="job-title" data-i18n="edu1.title">Ciência de Dados - Bacharelado</h4>
+                        <p class="company" data-i18n="edu1.school">Universidade Virtual do Estado de São Paulo (UNIVESP)</p>
+                        <p class="duration" data-i18n="edu1.period">Setembro 2024 - Setembro 2028</p>
                     </div>
 
                     <div class="education-item">
-                        <h4 class="job-title">Desenvolvimento de Sistemas - Técnico</h4>
-                        <p class="company">SENAI - Luiz Varga</p>
-                        <p class="duration">Janeiro 2023 - Dezembro 2024</p>
+                        <h4 class="job-title" data-i18n="edu2.title">Desenvolvimento de Sistemas - Técnico</h4>
+                        <p class="company" data-i18n="edu2.school">SENAI - Luiz Varga</p>
+                        <p class="duration" data-i18n="edu2.period">Janeiro 2023 - Dezembro 2024</p>
                         <ul class="achievements">
-                            <li>Estudei diversas linguagens de programação, frameworks e tecnologias, proporcionando uma visão ampla do desenvolvimento de software</li>
-                            <li>HTML e CSS para estruturação e estilização de interfaces web</li>
-                            <li>Programação orientada a objetos utilizando Java</li>
-                            <li>Desenvolvimento Backend: PHP (Laravel), JavaScript e Node.js</li>
-                            <li>Desenvolvimento Frontend: Angular e React</li>
-                            <li>Desenvolvimento Mobile: Flutter</li>
-                            <li>Experiência com conceitos e ferramentas de IA, utilizando Java e Python para Machine Learning, incluindo frameworks como Scikit-learn, Keras, Streamlit e TensorFlow</li>
+                            <li data-i18n="edu2.item1">Estudei diversas linguagens de programação, frameworks e tecnologias, proporcionando uma visão ampla do desenvolvimento de software</li>
+                            <li data-i18n="edu2.item2">HTML e CSS para estruturação e estilização de interfaces web</li>
+                            <li data-i18n="edu2.item3">Programação orientada a objetos utilizando Java</li>
+                            <li data-i18n="edu2.item4">Desenvolvimento Backend: PHP (Laravel), JavaScript e Node.js</li>
+                            <li data-i18n="edu2.item5">Desenvolvimento Frontend: Angular e React</li>
+                            <li data-i18n="edu2.item6">Desenvolvimento Mobile: Flutter</li>
+                            <li data-i18n="edu2.item7">Experiência com conceitos e ferramentas de IA, utilizando Java e Python para Machine Learning, incluindo frameworks como Scikit-learn, Keras, Streamlit e TensorFlow</li>
                         </ul>
                     </div>
                 </section>
@@ -588,7 +776,7 @@
                         <svg class="section-icon" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Certificações
+                        <span data-i18n="sections.certifications">Certificações</span>
                     </h3>
 
                     <div class="certification-item">
@@ -731,8 +919,480 @@
 
         // Atualizar a duração a cada dia (opcional)
         setInterval(calculateJobDuration, 24 * 60 * 60 * 1000); // 24 horas
+
+        // ==========================================
+        // SISTEMA DE TRADUÇÃO MULTILÍNGUE
+        // ==========================================
+        
+        const translations = {
+            pt: {
+                // Modal
+                'modal.title': 'Selecionar Idioma',
+                'modal.subtitle': 'Escolha o idioma de exibição',
+                'modal.close': 'Fechar',
+                
+                // Header
+                'header.title': 'Desenvolvedor',
+                'header.location': 'Limeira - São Paulo',
+                
+                // Seções
+                'sections.skills': 'Competências',
+                'sections.languages': 'Idiomas',
+                'sections.experience': 'Experiência',
+                'sections.education': 'Formação',
+                'sections.certifications': 'Certificações',
+                
+                // Skills
+                'skills.ai': 'Inteligência Artificial',
+                'skills.development': 'Desenvolvimento',
+                'skills.data': 'Dados & Analytics',
+                'skills.databases': 'Bancos de Dados',
+                'skills.automation': 'Automação',
+                
+                // Idiomas
+                'languages.portuguese': 'Português',
+                'languages.english': 'Inglês',
+                'languages.spanish': 'Espanhol',
+                'languages.french': 'Francês',
+                'levels.native': 'Nativo',
+                'levels.basic': 'Básico',
+                'levels.intermediate': 'Intermediário',
+                
+                // Experiência 1
+                'exp1.title': 'Desenvolvedor de Soluções em IA e Dados',
+                'exp1.company': 'Hiwis',
+                'exp1.type': 'Tempo Integral',
+                'exp1.period': 'Agosto 2025 - Presente',
+                'exp1.item1': 'Desenvolvimento de agentes inteligentes com LLMs (OpenAI, Groq, Claude, Gemma, Llama, LangChain, CrewAI), incluindo tool calling para automações',
+                'exp1.item2': 'Implementação de sistemas RAG utilizando Supabase, Pinecone, FAISS e embeddings com OpenAI',
+                'exp1.item3': 'Criação de fluxos automatizados utilizando n8n e Python, integrando APIs e serviços de IA',
+                'exp1.item4': 'Desenvolvimento de aplicações web full stack com React, Node.js, Express, PHP e PostgreSQL',
+                'exp1.item5': 'Criação de dashboards e visualizações interativas com JavaScript e Streamlit',
+                'exp1.item6': 'Gerenciamento de fluxos OAuth e integrações com APIs (Facebook, Instagram, Google, ElevenLabs)',
+                
+                // Experiência 2
+                'exp2.title': 'Analista de Dados',
+                'exp2.company': 'Hiwis',
+                'exp2.type': 'Estágio',
+                'exp2.period': 'Abril 2024 - Agosto 2025 · 1 ano 5 meses',
+                'exp2.location': 'São Paulo, Brasil',
+                'exp2.item1': 'Criação de dashboards para análise de dados em PowerBI, proporcionando insights visuais para tomada de decisões',
+                'exp2.item2': 'Tratamento e análise de dados utilizando Python e Excel, incluindo limpeza, transformação e visualização',
+                'exp2.item3': 'Automação de tarefas repetitivas para otimização de processos e aumentar eficiência operacional',
+                'exp2.item4': 'Desenvolvimento de relatórios analíticos e KPIs para acompanhamento de métricas empresariais',
+                
+                // Experiência 3
+                'exp3.title': 'Analista de Desenvolvimento de Sistemas',
+                'exp3.company': 'Ajinomoto do Brasil',
+                'exp3.type': 'Aprendiz',
+                'exp3.period': 'Fevereiro 2023 - Abril 2024 · 1 ano 3 meses',
+                'exp3.item1': 'Criação de dashboards interativos para análise de KPIs empresariais',
+                'exp3.item2': 'Desenvolvimento de análises preditivas e relatórios estratégicos',
+                'exp3.item3': 'Automação de processos e tratamento de dados',
+                
+                // Educação 1
+                'edu1.title': 'Ciência de Dados - Bacharelado',
+                'edu1.school': 'Universidade Virtual do Estado de São Paulo (UNIVESP)',
+                'edu1.period': 'Setembro 2024 - Setembro 2028',
+                
+                // Educação 2
+                'edu2.title': 'Desenvolvimento de Sistemas - Técnico',
+                'edu2.school': 'SENAI - Luiz Varga',
+                'edu2.period': 'Janeiro 2023 - Dezembro 2024',
+                'edu2.item1': 'Estudei diversas linguagens de programação, frameworks e tecnologias, proporcionando uma visão ampla do desenvolvimento de software',
+                'edu2.item2': 'HTML e CSS para estruturação e estilização de interfaces web',
+                'edu2.item3': 'Programação orientada a objetos utilizando Java',
+                'edu2.item4': 'Desenvolvimento Backend: PHP (Laravel), JavaScript e Node.js',
+                'edu2.item5': 'Desenvolvimento Frontend: Angular e React',
+                'edu2.item6': 'Desenvolvimento Mobile: Flutter',
+                'edu2.item7': 'Experiência com conceitos e ferramentas de IA, utilizando Java e Python para Machine Learning, incluindo frameworks como Scikit-learn, Keras, Streamlit e TensorFlow',
+                
+                // Botão
+                'btn.print': 'IMPRIMIR'
+            },
+            
+            en: {
+                // Modal
+                'modal.title': 'Select Language',
+                'modal.subtitle': 'Choose the display language',
+                'modal.close': 'Close',
+                
+                // Header
+                'header.title': 'Developer',
+                'header.location': 'Limeira - São Paulo, Brazil',
+                
+                // Seções
+                'sections.skills': 'Skills',
+                'sections.languages': 'Languages',
+                'sections.experience': 'Experience',
+                'sections.education': 'Education',
+                'sections.certifications': 'Certifications',
+                
+                // Skills
+                'skills.ai': 'Artificial Intelligence',
+                'skills.development': 'Development',
+                'skills.data': 'Data & Analytics',
+                'skills.databases': 'Databases',
+                'skills.automation': 'Automation',
+                
+                // Idiomas
+                'languages.portuguese': 'Portuguese',
+                'languages.english': 'English',
+                'languages.spanish': 'Spanish',
+                'languages.french': 'French',
+                'levels.native': 'Native',
+                'levels.basic': 'Basic',
+                'levels.intermediate': 'Intermediate',
+                
+                // Experiência 1
+                'exp1.title': 'AI & Data Solutions Developer',
+                'exp1.company': 'Hiwis',
+                'exp1.type': 'Full-time',
+                'exp1.period': 'August 2025 - Present',
+                'exp1.item1': 'Development of intelligent agents with LLMs (OpenAI, Groq, Claude, Gemma, Llama, LangChain, CrewAI), including tool calling for automations',
+                'exp1.item2': 'Implementation of RAG systems using Supabase, Pinecone, FAISS and embeddings with OpenAI',
+                'exp1.item3': 'Creation of automated workflows using n8n and Python, integrating APIs and AI services',
+                'exp1.item4': 'Full stack web application development with React, Node.js, Express, PHP and PostgreSQL',
+                'exp1.item5': 'Creation of dashboards and interactive visualizations with JavaScript and Streamlit',
+                'exp1.item6': 'OAuth flow management and API integrations (Facebook, Instagram, Google, ElevenLabs)',
+                
+                // Experiência 2
+                'exp2.title': 'Data Analyst',
+                'exp2.company': 'Hiwis',
+                'exp2.type': 'Internship',
+                'exp2.period': 'April 2024 - August 2025 · 1 year 5 months',
+                'exp2.location': 'São Paulo, Brazil',
+                'exp2.item1': 'Creation of dashboards for data analysis in PowerBI, providing visual insights for decision making',
+                'exp2.item2': 'Data treatment and analysis using Python and Excel, including cleaning, transformation and visualization',
+                'exp2.item3': 'Automation of repetitive tasks for process optimization and increased operational efficiency',
+                'exp2.item4': 'Development of analytical reports and KPIs for business metrics tracking',
+                
+                // Experiência 3
+                'exp3.title': 'Systems Development Analyst',
+                'exp3.company': 'Ajinomoto Brazil',
+                'exp3.type': 'Apprentice',
+                'exp3.period': 'February 2023 - April 2024 · 1 year 3 months',
+                'exp3.item1': 'Creation of interactive dashboards for business KPI analysis',
+                'exp3.item2': 'Development of predictive analysis and strategic reports',
+                'exp3.item3': 'Process automation and data treatment',
+                
+                // Educação 1
+                'edu1.title': 'Data Science - Bachelor\'s Degree',
+                'edu1.school': 'Virtual University of São Paulo State (UNIVESP)',
+                'edu1.period': 'September 2024 - September 2028',
+                
+                // Educação 2
+                'edu2.title': 'Systems Development - Technical Degree',
+                'edu2.school': 'SENAI - Luiz Varga',
+                'edu2.period': 'January 2023 - December 2024',
+                'edu2.item1': 'Studied various programming languages, frameworks and technologies, providing a broad view of software development',
+                'edu2.item2': 'HTML and CSS for structuring and styling web interfaces',
+                'edu2.item3': 'Object-oriented programming using Java',
+                'edu2.item4': 'Backend Development: PHP (Laravel), JavaScript and Node.js',
+                'edu2.item5': 'Frontend Development: Angular and React',
+                'edu2.item6': 'Mobile Development: Flutter',
+                'edu2.item7': 'Experience with AI concepts and tools, using Java and Python for Machine Learning, including frameworks such as Scikit-learn, Keras, Streamlit and TensorFlow',
+                
+                // Botão
+                'btn.print': 'PRINT'
+            },
+            
+            es: {
+                // Modal
+                'modal.title': 'Seleccionar Idioma',
+                'modal.subtitle': 'Elija el idioma de visualización',
+                'modal.close': 'Cerrar',
+                
+                // Header
+                'header.title': 'Desarrollador',
+                'header.location': 'Limeira - São Paulo, Brasil',
+                
+                // Seções
+                'sections.skills': 'Competencias',
+                'sections.languages': 'Idiomas',
+                'sections.experience': 'Experiencia',
+                'sections.education': 'Formación',
+                'sections.certifications': 'Certificaciones',
+                
+                // Skills
+                'skills.ai': 'Inteligencia Artificial',
+                'skills.development': 'Desarrollo',
+                'skills.data': 'Datos & Analytics',
+                'skills.databases': 'Bases de Datos',
+                'skills.automation': 'Automatización',
+                
+                // Idiomas
+                'languages.portuguese': 'Portugués',
+                'languages.english': 'Inglés',
+                'languages.spanish': 'Español',
+                'languages.french': 'Francés',
+                'levels.native': 'Nativo',
+                'levels.basic': 'Básico',
+                'levels.intermediate': 'Intermedio',
+                
+                // Experiência 1
+                'exp1.title': 'Desarrollador de Soluciones en IA y Datos',
+                'exp1.company': 'Hiwis',
+                'exp1.type': 'Tiempo Completo',
+                'exp1.period': 'Agosto 2025 - Presente',
+                'exp1.item1': 'Desarrollo de agentes inteligentes con LLMs (OpenAI, Groq, Claude, Gemma, Llama, LangChain, CrewAI), incluyendo tool calling para automatizaciones',
+                'exp1.item2': 'Implementación de sistemas RAG utilizando Supabase, Pinecone, FAISS y embeddings con OpenAI',
+                'exp1.item3': 'Creación de flujos automatizados utilizando n8n y Python, integrando APIs y servicios de IA',
+                'exp1.item4': 'Desarrollo de aplicaciones web full stack con React, Node.js, Express, PHP y PostgreSQL',
+                'exp1.item5': 'Creación de dashboards y visualizaciones interactivas con JavaScript y Streamlit',
+                'exp1.item6': 'Gestión de flujos OAuth e integraciones con APIs (Facebook, Instagram, Google, ElevenLabs)',
+                
+                // Experiência 2
+                'exp2.title': 'Analista de Datos',
+                'exp2.company': 'Hiwis',
+                'exp2.type': 'Pasantía',
+                'exp2.period': 'Abril 2024 - Agosto 2025 · 1 año 5 meses',
+                'exp2.location': 'São Paulo, Brasil',
+                'exp2.item1': 'Creación de dashboards para análisis de datos en PowerBI, proporcionando insights visuales para la toma de decisiones',
+                'exp2.item2': 'Tratamiento y análisis de datos utilizando Python y Excel, incluyendo limpieza, transformación y visualización',
+                'exp2.item3': 'Automatización de tareas repetitivas para optimización de procesos y aumento de eficiencia operacional',
+                'exp2.item4': 'Desarrollo de informes analíticos y KPIs para seguimiento de métricas empresariales',
+                
+                // Experiência 3
+                'exp3.title': 'Analista de Desarrollo de Sistemas',
+                'exp3.company': 'Ajinomoto Brasil',
+                'exp3.type': 'Aprendiz',
+                'exp3.period': 'Febrero 2023 - Abril 2024 · 1 año 3 meses',
+                'exp3.item1': 'Creación de dashboards interactivos para análisis de KPIs empresariales',
+                'exp3.item2': 'Desarrollo de análisis predictivos e informes estratégicos',
+                'exp3.item3': 'Automatización de procesos y tratamiento de datos',
+                
+                // Educação 1
+                'edu1.title': 'Ciencia de Datos - Licenciatura',
+                'edu1.school': 'Universidad Virtual del Estado de São Paulo (UNIVESP)',
+                'edu1.period': 'Septiembre 2024 - Septiembre 2028',
+                
+                // Educação 2
+                'edu2.title': 'Desarrollo de Sistemas - Técnico',
+                'edu2.school': 'SENAI - Luiz Varga',
+                'edu2.period': 'Enero 2023 - Diciembre 2024',
+                'edu2.item1': 'Estudié diversos lenguajes de programación, frameworks y tecnologías, proporcionando una visión amplia del desarrollo de software',
+                'edu2.item2': 'HTML y CSS para estructuración y estilización de interfaces web',
+                'edu2.item3': 'Programación orientada a objetos utilizando Java',
+                'edu2.item4': 'Desarrollo Backend: PHP (Laravel), JavaScript y Node.js',
+                'edu2.item5': 'Desarrollo Frontend: Angular y React',
+                'edu2.item6': 'Desarrollo Mobile: Flutter',
+                'edu2.item7': 'Experiencia con conceptos y herramientas de IA, utilizando Java y Python para Machine Learning, incluyendo frameworks como Scikit-learn, Keras, Streamlit y TensorFlow',
+                
+                // Botão
+                'btn.print': 'IMPRIMIR'
+            },
+            
+            fr: {
+                // Modal
+                'modal.title': 'Sélectionner la Langue',
+                'modal.subtitle': 'Choisissez la langue d\'affichage',
+                'modal.close': 'Fermer',
+                
+                // Header
+                'header.title': 'Développeur',
+                'header.location': 'Limeira - São Paulo, Brésil',
+                
+                // Seções
+                'sections.skills': 'Compétences',
+                'sections.languages': 'Langues',
+                'sections.experience': 'Expérience',
+                'sections.education': 'Formation',
+                'sections.certifications': 'Certifications',
+                
+                // Skills
+                'skills.ai': 'Intelligence Artificielle',
+                'skills.development': 'Développement',
+                'skills.data': 'Données & Analytics',
+                'skills.databases': 'Bases de Données',
+                'skills.automation': 'Automatisation',
+                
+                // Idiomas
+                'languages.portuguese': 'Portugais',
+                'languages.english': 'Anglais',
+                'languages.spanish': 'Espagnol',
+                'languages.french': 'Français',
+                'levels.native': 'Natif',
+                'levels.basic': 'Basique',
+                'levels.intermediate': 'Intermédiaire',
+                
+                // Experiência 1
+                'exp1.title': 'Développeur de Solutions IA et Données',
+                'exp1.company': 'Hiwis',
+                'exp1.type': 'Temps Plein',
+                'exp1.period': 'Août 2025 - Présent',
+                'exp1.item1': 'Développement d\'agents intelligents avec LLMs (OpenAI, Groq, Claude, Gemma, Llama, LangChain, CrewAI), incluant tool calling pour automatisations',
+                'exp1.item2': 'Implémentation de systèmes RAG utilisant Supabase, Pinecone, FAISS et embeddings avec OpenAI',
+                'exp1.item3': 'Création de flux automatisés utilisant n8n et Python, intégrant APIs et services IA',
+                'exp1.item4': 'Développement d\'applications web full stack avec React, Node.js, Express, PHP et PostgreSQL',
+                'exp1.item5': 'Création de tableaux de bord et visualisations interactives avec JavaScript et Streamlit',
+                'exp1.item6': 'Gestion des flux OAuth et intégrations avec APIs (Facebook, Instagram, Google, ElevenLabs)',
+                
+                // Experiência 2
+                'exp2.title': 'Analyste de Données',
+                'exp2.company': 'Hiwis',
+                'exp2.type': 'Stage',
+                'exp2.period': 'Avril 2024 - Août 2025 · 1 an 5 mois',
+                'exp2.location': 'São Paulo, Brésil',
+                'exp2.item1': 'Création de tableaux de bord pour l\'analyse de données en PowerBI, fournissant des insights visuels pour la prise de décision',
+                'exp2.item2': 'Traitement et analyse de données utilisant Python et Excel, incluant nettoyage, transformation et visualisation',
+                'exp2.item3': 'Automatisation des tâches répétitives pour l\'optimisation des processus et l\'augmentation de l\'efficacité opérationnelle',
+                'exp2.item4': 'Développement de rapports analytiques et KPIs pour le suivi des métriques d\'entreprise',
+                
+                // Experiência 3
+                'exp3.title': 'Analyste de Développement de Systèmes',
+                'exp3.company': 'Ajinomoto Brésil',
+                'exp3.type': 'Apprenti',
+                'exp3.period': 'Février 2023 - Avril 2024 · 1 an 3 mois',
+                'exp3.item1': 'Création de tableaux de bord interactifs pour l\'analyse des KPIs d\'entreprise',
+                'exp3.item2': 'Développement d\'analyses prédictives et de rapports stratégiques',
+                'exp3.item3': 'Automatisation des processus et traitement des données',
+                
+                // Educação 1
+                'edu1.title': 'Science des Données - Licence',
+                'edu1.school': 'Université Virtuelle de l\'État de São Paulo (UNIVESP)',
+                'edu1.period': 'Septembre 2024 - Septembre 2028',
+                
+                // Educação 2
+                'edu2.title': 'Développement de Systèmes - Diplôme Technique',
+                'edu2.school': 'SENAI - Luiz Varga',
+                'edu2.period': 'Janvier 2023 - Décembre 2024',
+                'edu2.item1': 'Étude de diverses langages de programmation, frameworks et technologies, offrant une vision large du développement logiciel',
+                'edu2.item2': 'HTML et CSS pour la structuration et le style des interfaces web',
+                'edu2.item3': 'Programmation orientée objet utilisant Java',
+                'edu2.item4': 'Développement Backend: PHP (Laravel), JavaScript et Node.js',
+                'edu2.item5': 'Développement Frontend: Angular et React',
+                'edu2.item6': 'Développement Mobile: Flutter',
+                'edu2.item7': 'Expérience avec les concepts et outils d\'IA, utilisant Java et Python pour le Machine Learning, incluant frameworks comme Scikit-learn, Keras, Streamlit et TensorFlow',
+                
+                // Botão
+                'btn.print': 'IMPRIMER'
+            }
+        };
+
+        const langConfig = {
+            pt: { flag: '🇧🇷', name: 'PT' },
+            en: { flag: '🇺🇸', name: 'EN' },
+            es: { flag: '🇪🇸', name: 'ES' },
+            fr: { flag: '🇫🇷', name: 'FR' }
+        };
+
+        let currentLang = localStorage.getItem('cv-language') || 'pt';
+
+        function openModal() {
+            const modal = document.getElementById('langModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('langModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('langModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Fechar com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('cv-language', lang);
+            
+            // Atualizar botão trigger
+            document.getElementById('currentFlag').textContent = langConfig[lang].flag;
+            document.getElementById('currentLangName').textContent = langConfig[lang].name;
+            
+            // Atualizar botões ativos no modal
+            document.querySelectorAll('.flag-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            // Atualizar atributo lang do HTML
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang === 'es' ? 'es' : lang === 'en' ? 'en' : 'fr';
+            
+            // Traduzir todos os elementos
+            translatePage(lang);
+            
+            // Recalcular duração do emprego no idioma correto
+            calculateJobDurationTranslated(lang);
+            
+            closeModal();
+        }
+
+        function translatePage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        function calculateJobDurationTranslated(lang) {
+            const startDate = new Date('2025-08-01');
+            const currentDate = new Date();
+
+            const yearDiff = currentDate.getFullYear() - startDate.getFullYear();
+            const monthDiff = currentDate.getMonth() - startDate.getMonth();
+            const totalMonths = yearDiff * 12 + monthDiff;
+
+            const dayDiff = currentDate.getDate() - startDate.getDate();
+            const adjustedMonths = dayDiff >= 0 ? totalMonths : totalMonths - 1;
+
+            let durationText = '';
+            
+            const labels = {
+                pt: { month: 'mês', months: 'meses', year: 'ano', years: 'anos' },
+                en: { month: 'month', months: 'months', year: 'year', years: 'years' },
+                es: { month: 'mes', months: 'meses', year: 'año', years: 'años' },
+                fr: { month: 'mois', months: 'mois', year: 'an', years: 'ans' }
+            };
+            
+            const l = labels[lang] || labels.pt;
+
+            if (adjustedMonths < 1) {
+                durationText = `1 ${l.month}`;
+            } else if (adjustedMonths === 1) {
+                durationText = `1 ${l.month}`;
+            } else if (adjustedMonths < 12) {
+                durationText = `${adjustedMonths} ${l.months}`;
+            } else {
+                const years = Math.floor(adjustedMonths / 12);
+                const remainingMonths = adjustedMonths % 12;
+
+                if (remainingMonths === 0) {
+                    durationText = years === 1 ? `1 ${l.year}` : `${years} ${l.years}`;
+                } else {
+                    const yearText = years === 1 ? `1 ${l.year}` : `${years} ${l.years}`;
+                    const monthText = remainingMonths === 1 ? `1 ${l.month}` : `${remainingMonths} ${l.months}`;
+                    durationText = `${yearText} ${monthText}`;
+                }
+            }
+
+            const durationElement = document.getElementById('dynamic-duration');
+            if (durationElement) {
+                durationElement.textContent = durationText;
+            }
+        }
+
+        // Inicializar idioma ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            setLanguage(currentLang);
+        });
     </script>
 
-    <button class="print-btn" onclick="window.print()">IMPRIMIR</button>
+    <button class="print-btn" onclick="window.print()" data-i18n="btn.print">IMPRIMIR</button>
 </body>
 </html>
